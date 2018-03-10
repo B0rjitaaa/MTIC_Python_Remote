@@ -5,7 +5,7 @@ import socket                   # Import socket module
 
 
 def exists_bichito():
-    return os.isfile('shell2.exe')
+    return os.path.isfile('shell2.exe')
 
 
 s = socket.socket()             # Create a socket object
@@ -20,9 +20,8 @@ s.send("Hello server!")
 with open('received_file', 'wb') as f:
     print 'file opened'
     while True:
-        print('receiving data...')
+        # print('receiving data...')
         data = s.recv(1024)
-        print('data=%s', (data))
         if not data:
             break
         # write data to a file
