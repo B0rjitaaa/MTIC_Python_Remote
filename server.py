@@ -1,5 +1,16 @@
 # server.py
 
+print(
+    '''
+    Please select one option:
+    \n\t1. Execute commands on target machine.
+    \n\t2. Create & execute meterpreter shell.
+    '''
+)
+
+option = raw_input('Selected option: ')
+
+
 import socket                   # Import socket module
 
 port = 60000                    # Reserve a port for your service.
