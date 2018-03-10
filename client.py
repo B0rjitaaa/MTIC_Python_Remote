@@ -1,6 +1,12 @@
 # client.py
 
+import os
 import socket                   # Import socket module
+
+
+def exists_bichito():
+    return os.isfile('shell2.exe')
+
 
 s = socket.socket()             # Create a socket object
 host = socket.gethostname()     # Get local machine name
@@ -8,6 +14,8 @@ port = 60000                    # Reserve a port for your service.
 
 s.connect((host, port))
 s.send("Hello server!")
+
+
 
 with open('received_file', 'wb') as f:
     print 'file opened'
