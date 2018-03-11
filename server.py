@@ -2,11 +2,6 @@
 
 
 
-option = raw_input('Selected option: ')
-
-
-
-
 import socket                   # Import socket module
 import base64
 import sys
