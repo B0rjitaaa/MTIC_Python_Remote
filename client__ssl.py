@@ -51,8 +51,8 @@ def main():
         # so here ca_certs must be the server certificate itself.
         ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED, ca_certs='cert')
         ssl_sock.connect((config_data['ip'], config_data['port']))
-        #echo_client(ssl_sock)
-        echo_get_exploit(ssl_sock)
+        echo_client(ssl_sock)
+        # echo_get_exploit(ssl_sock)
         ssl_sock.close()
 
 

