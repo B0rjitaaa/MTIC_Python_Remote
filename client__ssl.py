@@ -1,8 +1,12 @@
+import socket
 import ssl
 import subprocess
-port = 8082
+import json
 
-import socket, ssl
+
+def get_json_data(json_file):
+    return json.load(open(json_file))
+
 
 def echo_client(s):
     while True:
@@ -20,19 +24,23 @@ def echo_client(s):
         print('Connection closed')
     s.close()
 
-while True:
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def main():
+    config_data = get_json_data('config_w.json')
 
-    # Require a certificate from the server. We used a self-signed certificate
-    # so here ca_certs must be the server certificate itself.
-    ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED, ca_certs='cert')
+    while True:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    ssl_sock.connect(('127.0.0.1', 8087))
+        # Require a certificate from the server. We used a self-signed certificate
+        # so here ca_certs must be the server certificate itself.
+        ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED, ca_certs='cert')
+        ssl_sock.connect((config_data['ip'], config_data['port']))
+        echo_client(ssl_sock)
+        ssl_sock.close()
 
-    echo_client(ssl_sock)
 
-
-    
-
-    ssl_sock.close()
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+            sys.exit(2)
