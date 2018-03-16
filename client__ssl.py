@@ -16,8 +16,6 @@ def echo_client(s):
         # encoded = encode(response)
         # s.send(encoded)
         print(response)
-        if data == 'ola':
-            print('niceee')
         if data == b'':
             break
         s.send(b'This is a response.')
