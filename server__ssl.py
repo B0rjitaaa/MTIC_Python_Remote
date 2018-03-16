@@ -55,7 +55,7 @@ def echo_server(address):
     while True:
         try:
             (c,a) = s_ssl.accept()
-            print('Got connection', c, a)
+            print('Got connection', a)
             while 1:
                 c.write(str(input("Enter Something: ")).encode())
             # echo_client(c)
