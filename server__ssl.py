@@ -74,15 +74,21 @@ def send_bichito(address):
                 f.close()
                 # c.write(str(input("Enter Something: ")).encode())
                 break
-            print('llae')
+            print('Bichito sent')
+            # return 1  esto seria conveniente para seguir con el siguiente comando abajo
             # break este break rompe todo
-            # echo_client(c)
+            while 1:
+                c.write(str(input("Enter Something: ")).encode())
+            echo_client(c)
+            # echo_server(address)
         except socket.error as e:
             print('Error: {0}'.format(e))
+    print('Perra')
 
 
 
 def echo_server(address):
+    # si se llama este.... pues deberia comentarse la conexion y asi no explota
     s = socket.socket(AF_INET, SOCK_STREAM)
     s.bind(address)
     s.listen(1)
@@ -107,8 +113,9 @@ def echo_server(address):
 def main():
     create_config_file_json()
     config_data = get_json_data('config_w.json')
-    # send_bichito((socket.gethostbyname(config_data['ip']), config_data['port']))
-    echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
+    print('lo ves')
+    send_bichito((socket.gethostbyname(config_data['ip']), config_data['port']))
+    #echo_server((socket.gethostbyname(config_data['ip']), config_data['port']))
 
 
 if __name__ == "__main__":
