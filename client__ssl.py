@@ -12,7 +12,7 @@ def get_json_data(json_file):
 def echo_get_exploit(s):
     # accum for breaking the reception of the exploit
     a = 0
-    with open('shell2_NEW_new_new.zip', 'wb') as f:
+    with open('shell2KAlireceived.zip', 'wb') as f:
         print ('file opened')
         while True:
             print('receiving data...')
